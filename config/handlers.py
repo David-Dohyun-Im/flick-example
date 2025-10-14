@@ -1,5 +1,5 @@
 from typing import Dict, List
-import mcp.types as types
+from mcp import types
 from pydantic import ValidationError
 from .base_widget import BaseWidget
 

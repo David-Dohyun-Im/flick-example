@@ -1,6 +1,6 @@
 from typing import List
-from mcp.server.fastmcp import FastMCP
-import mcp.types as types
+from fastmcp import FastMCP
+from mcp import types
 from .base_widget import BaseWidget
 from .handlers import MCPHandlers
 
