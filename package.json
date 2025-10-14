@@ -1,0 +1,20 @@
+{
+  "name": "chatgpt-widget-framework",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsx build-all.mts",
+    "server": "cd server && python main.py"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}
+
