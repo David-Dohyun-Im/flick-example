@@ -1,6 +1,6 @@
-# Floydr Example Project
+# FastApps Example Project
 
-Example ChatGPT widget application built with the [Floydr Framework](https://pypi.org/project/floydr/).
+Example ChatGPT widget application built with the [FastApps Framework](https://pypi.org/project/fastapps/).
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install Python packages
-pip install floydr httpx
+pip install fastapps httpx
 
 # Install Node packages
 npm install
@@ -73,10 +73,10 @@ Server will start at: **http://0.0.0.0:8001**
 
 ### 1. Hello World
 **Identifier**: `helloworld`  
-**Purpose**: Demonstrates basic Floydr usage
+**Purpose**: Demonstrates basic FastApps usage
 
 ```python
-from floydr import BaseWidget
+from fastapps import BaseWidget
 ```
 
 ```jsx
@@ -99,12 +99,12 @@ import { useWidgetProps } from 'chatjs-hooks';
 - CSP configuration
 - Border preference
 
-## Floydr Commands
+## FastApps Commands
 
 ### Framework Import
 ```python
 # In your tool files
-from floydr import BaseWidget, Field, ConfigDict, WidgetMCPServer, WidgetBuilder
+from fastapps import BaseWidget, Field, ConfigDict, WidgetMCPServer, WidgetBuilder
 ```
 
 ### React Hooks
@@ -128,17 +128,17 @@ npm run build
 python server/main.py
 
 # Create a new widget (with templates!)
-python -m floydr.cli.main create mywidget
+python -m fastapps.cli.main create mywidget
 
 # Run tests
 python test_widgets.py
 python test_final.py
 
-# Check floydr installation
-pip show floydr
+# Check fastapps installation
+pip show fastapps
 
-# Upgrade floydr
-pip install --upgrade floydr
+# Upgrade fastapps
+pip install --upgrade fastapps
 ```
 
 ### NPM Commands
@@ -158,14 +158,14 @@ npm install chatjs-hooks@latest
 
 ## Creating a New Widget
 
-### Quick Method: Use Floydr CLI ⚡
+### Quick Method: Use FastApps CLI ⚡
 
 ```bash
 # Automatically generates both files with templates!
-python -m floydr.cli.main create mywidget
+python -m fastapps.cli.main create mywidget
 
-# Or if floydr command is available:
-floydr create mywidget
+# Or if fastapps command is available:
+fastapps create mywidget
 ```
 
 This creates:
@@ -191,7 +191,7 @@ If you prefer to create files manually:
 Create `server/tools/mywidget_tool.py`:
 
 ```python
-from floydr import BaseWidget, ConfigDict
+from fastapps import BaseWidget, ConfigDict
 from pydantic import BaseModel
 from typing import Dict, Any
 
@@ -238,7 +238,7 @@ export default function Mywidget() {
       borderRadius: '8px',
       fontFamily: 'monospace'
     }}>
-      <h1>{props.message || 'Welcome to Floydr'}</h1>
+      <h1>{props.message || 'Welcome to FastApps'}</h1>
     </div>
   );
 }
@@ -349,9 +349,9 @@ ls -lh assets/
 
 ## Troubleshooting
 
-### Module Not Found: floydr
+### Module Not Found: fastapps
 ```bash
-pip install floydr
+pip install fastapps
 # Make sure venv is activated
 ```
 
@@ -377,7 +377,7 @@ npm install chatjs-hooks --force
 
 ## Learn More
 
-- **Floydr (Python)**: https://pypi.org/project/floydr/
+- **FastApps (Python)**: https://pypi.org/project/fastapps/
 - **ChatJS Hooks (npm)**: https://www.npmjs.com/package/chatjs-hooks
 - **MCP Specification**: https://modelcontextprotocol.io/
 
