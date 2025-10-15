@@ -11,7 +11,7 @@ class PizzaListInput(BaseModel):
 
 
 class PizzaListTool(BaseWidget):
-    identifier = "pizza-list"
+    identifier = "pizza_list"
     title = "Show Pizza List"
     input_schema = PizzaListInput
     invoking = "Preparing pizza list..."

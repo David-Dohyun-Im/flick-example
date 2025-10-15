@@ -11,7 +11,7 @@ class PizzaMapInput(BaseModel):
 
 
 class PizzaMapTool(BaseWidget):
-    identifier = "pizza-map"
+    identifier = "pizza_map"
     title = "Show Pizza Map"
     input_schema = PizzaMapInput
     invoking = "Hand-tossing a map..."

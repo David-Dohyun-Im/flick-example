@@ -2,6 +2,29 @@
 
 A Python-based framework for building and deploying interactive widgets for ChatGPT using FastMCP, React, and Vite.
 
+## ✨ Key Features
+
+- **🚀 Zero Configuration**: Just create your tool and component - everything else is automated
+- **🔄 Auto-Discovery**: Tools are automatically detected and registered
+- **📦 Auto-Generation**: Build configurations and boilerplate are generated automatically
+- **⚡ Hot Reload**: Changes are picked up on server restart
+- **🎨 React + Vite**: Modern frontend development experience
+
+## 🎯 What's Automated?
+
+When you add a new widget, the framework automatically:
+
+1. ✅ Injects mounting logic during build (no `_app.jsx` needed!)
+2. ✅ Discovers and registers your tool
+3. ✅ Builds and bundles your widget
+4. ✅ Generates optimized HTML with embedded JS/CSS
+
+**You only need to create:**
+- `server/tools/your_tool.py` - Your tool logic
+- `widgets/your_widget/index.jsx` - Your React component
+
+That's it! No boilerplate files, no manual registration, no configuration!
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -80,75 +103,17 @@ flick/
 └── requirements.txt       # Python dependencies
 ```
 
-## 🛠️ Creating a New Widget
+## 🛠️ Creating a New Widget (Super Easy!)
 
-### 1. Create Widget Component
+With the new automation, creating a widget is incredibly simple. Just **2 files**!
 
-Create a new directory under `widgets/` with your component:
-
-```bash
-mkdir -p widgets/my_widget
-```
-
-Create `widgets/my_widget/index.jsx`:
-
-```jsx
-import React from 'react';
-import { useWidgetProps } from '../../hooks/use-widget-props';
-
-export default function MyWidget() {
-  const props = useWidgetProps();
-  
-  // Debug logging
-  React.useEffect(() => {
-    console.log('MyWidget received props:', props);
-  }, [props]);
-  
-  // Show loading state if no data
-  if (!props.myData) {
-    return (
-      <div className="my-widget">
-        <h2>Loading...</h2>
-        <pre style={{ fontSize: '10px', background: '#f5f5f5', padding: '10px' }}>
-          Debug: {JSON.stringify(props, null, 2)}
-        </pre>
-      </div>
-    );
-  }
-  
-  return (
-    <div className="my-widget">
-      <h2>My Widget</h2>
-      <p>{props.myData}</p>
-    </div>
-  );
-}
-```
-
-Create `widgets/my_widget/_app.jsx`:
-
-```jsx
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import MyWidget from './index.jsx';
-
-// Mount the component
-const rootElement = document.getElementById('my_widget-root');
-if (rootElement) {
-  const root = createRoot(rootElement);
-  root.render(<MyWidget />);
-} else {
-  console.error('Root element #my_widget-root not found!');
-}
-```
-
-### 2. Create MCP Tool
+### Step 1: Create Your Tool (Python)
 
 Create `server/tools/my_widget_tool.py`:
 
 ```python
 from config.base_widget import BaseWidget
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict
 from typing import Dict, Any
 
 
@@ -159,7 +124,7 @@ class MyWidgetInput(BaseModel):
 
 
 class MyWidgetTool(BaseWidget):
-    identifier = "my-widget"
+    identifier = "my_widget"  # Must match widget folder name!
     title = "My Widget"
     input_schema = MyWidgetInput
     invoking = "Preparing widget..."
@@ -167,41 +132,111 @@ class MyWidgetTool(BaseWidget):
     
     widget_csp = {
         "connect_domains": [],
-        "resource_domains": ["https://persistent.oaistatic.com"]
+        "resource_domains": []
     }
     
     async def execute(self, input_data: MyWidgetInput) -> Dict[str, Any]:
+        # Your custom logic here
         return {
             "myData": input_data.my_data
         }
 ```
 
-### 3. Register Widget
+### Step 2: Create Your Component (React)
 
-Add your widget to `server/main.py`:
+Create `widgets/my_widget/index.jsx`:
 
-```python
-from server.tools import PizzaMapTool, PizzaListTool, MyWidgetTool
+```jsx
+import React from 'react';
+import { useWidgetProps } from '../../hooks/use-widget-props';
 
-tools = [
-    PizzaMapTool(build_results["pizza_map"]),
-    PizzaListTool(build_results["pizza_list"]),
-    MyWidgetTool(build_results["my_widget"]),  # Add your widget
-]
+export default function MyWidget() {
+  const props = useWidgetProps();
+  
+  return (
+    <div className="my-widget">
+      <h2>My Widget</h2>
+      <p>{props.myData || 'Loading...'}</p>
+      <pre>{JSON.stringify(props, null, 2)}</pre>
+    </div>
+  );
+}
 ```
 
-### 4. Build and Test
+### Step 3: Run!
 
 ```bash
-# Build widgets
-npm run build
-
-# Restart server
+# That's it! Just start the server
 python server/main.py
-
-# Test the widget
-python test_widgets.py
 ```
+
+The framework will automatically:
+- ✅ Inject mounting logic during build
+- ✅ Build and bundle your widget
+- ✅ Discover and register your tool
+- ✅ Generate optimized HTML bundle
+
+**No boilerplate files needed!** 🎉
+
+### Widget Structure
+
+Your widget folder is incredibly simple:
+
+```
+widgets/my_widget/
+└── index.jsx           ← That's it! Just this one file!
+```
+
+The mounting logic, build configuration, and everything else is handled automatically by the build system.
+
+### Important Notes
+
+1. **Naming Convention**: Use `snake_case` for everything:
+   - Tool file: `my_widget_tool.py`
+   - Widget folder: `my_widget/`
+   - Identifier: `"my_widget"`
+
+2. **Tool Discovery**: All `*_tool.py` files in `server/tools/` are automatically discovered
+
+3. **No Import Needed**: Don't add imports to `__init__.py` or `main.py` - it's automatic!
+
+### Example: Hello World
+
+The simplest possible widget:
+
+**`server/tools/helloworld_tool.py`**:
+```python
+from config.base_widget import BaseWidget
+from pydantic import BaseModel, ConfigDict
+from typing import Dict, Any
+
+class HelloWorldInput(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+class HelloWorldTool(BaseWidget):
+    identifier = "helloworld"
+    title = "Hello World"
+    input_schema = HelloWorldInput
+    invoking = "Preparing hello world..."
+    invoked = "Hello world ready!"
+    widget_csp = {"connect_domains": [], "resource_domains": []}
+    
+    async def execute(self, input_data: HelloWorldInput) -> Dict[str, Any]:
+        return {"message": "Hello World!", "timestamp": "2025-10-15"}
+```
+
+**`widgets/helloworld/index.jsx`**:
+```jsx
+import React from 'react';
+import { useWidgetProps } from '../../hooks/use-widget-props';
+
+export default function HelloWorld() {
+  const props = useWidgetProps();
+  return <h1>🌍 {props.message || 'Hello World!'} 🌍</h1>;
+}
+```
+
+Start the server and you're done! ✨
 
 ## 🧪 Testing
 

@@ -6,21 +6,19 @@ import fs from "fs";
 import crypto from "crypto";
 import pkg from "./package.json" with { type: "json" };
 
-// For each widget, prefer _app.{tsx,jsx} (which mounts the component) over index.{tsx,jsx}
+// Find all widget directories with index.{tsx,jsx}
 const widgetDirs = fg.sync("widgets/*/", { onlyDirectories: true });
 const entries = widgetDirs.map((dir) => {
-  // Ensure dir ends with /
   const dirPath = dir.endsWith('/') ? dir : dir + '/';
-  const appFiles = fg.sync(`${dirPath}_app.{tsx,jsx}`);
   const indexFiles = fg.sync(`${dirPath}index.{tsx,jsx}`);
-  // Prefer _app.jsx if it exists, otherwise use index.jsx
-  return appFiles.length > 0 ? appFiles[0] : indexFiles[0];
+  return indexFiles[0];
 }).filter(Boolean);
 const outDir = "assets";
 
 function wrapEntryPlugin(
   virtualId: string,
-  entryFile: string
+  entryFile: string,
+  widgetName: string
 ): Plugin {
   return {
     name: `virtual-entry-wrapper:${entryFile}`,
@@ -32,13 +30,20 @@ function wrapEntryPlugin(
         return null;
       }
 
+      // Automatically add mounting logic - no _app.jsx needed!
       return `
-    export * from ${JSON.stringify(entryFile)};
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import Component from ${JSON.stringify(entryFile)};
 
-    import * as __entry from ${JSON.stringify(entryFile)};
-    export default (__entry.default ?? __entry.App);
-
-    import ${JSON.stringify(entryFile)};
+    // Auto-mount the component
+    const rootElement = document.getElementById('${widgetName}-root');
+    if (rootElement) {
+      const root = createRoot(rootElement);
+      root.render(React.createElement(Component));
+    } else {
+      console.error('Root element #${widgetName}-root not found!');
+    }
   `;
     },
   };
@@ -58,7 +63,7 @@ for (const file of entries) {
 
   const createConfig = (): InlineConfig => ({
     plugins: [
-      wrapEntryPlugin(virtualId, entryAbs),
+      wrapEntryPlugin(virtualId, entryAbs, name),
       react(),
       {
         name: "remove-manual-chunks",
