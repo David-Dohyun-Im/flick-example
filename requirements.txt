@@ -1,5 +1,5 @@
 # Floydr Framework
-floydr>=1.0.0
+fastapps>=1.0.0
 
 # Example project dependencies
 httpx>=0.28.0

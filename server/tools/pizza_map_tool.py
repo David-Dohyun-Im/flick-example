@@ -1,4 +1,4 @@
-from floydr import BaseWidget, Field, ConfigDict
+from fastapps import BaseWidget, Field, ConfigDict
 from pydantic import BaseModel
 from typing import Dict, Any
 from server.api.pizzeria_api import get_pizzerias
