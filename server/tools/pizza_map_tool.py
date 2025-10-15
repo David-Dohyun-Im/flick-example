@@ -1,14 +1,13 @@
 from config.base_widget import BaseWidget
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Dict, Any
-from ..api.pizzeria_api import get_pizzerias
+from server.api.pizzeria_api import get_pizzerias
 
 
 class PizzaMapInput(BaseModel):
-    pizza_topping: str = Field(..., alias="pizzaTopping")
+    model_config = ConfigDict(populate_by_name=True)
     
-    class Config:
-        populate_by_name = True
+    pizza_topping: str = Field(..., alias="pizzaTopping")
 
 
 class PizzaMapTool(BaseWidget):

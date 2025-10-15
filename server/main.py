@@ -4,7 +4,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from config.builder import WidgetBuilder
 from config.mcp_server import WidgetMCPServer
-from tools import PizzaMapTool, PizzaListTool
+from server.tools import PizzaMapTool, PizzaListTool
 import uvicorn
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -15,8 +15,8 @@ build_results = builder.build_all()
 
 # 2. Tools 초기화
 tools = [
-    PizzaMapTool(build_results["pizza-map"]),
-    PizzaListTool(build_results["pizza-list"]),
+    PizzaMapTool(build_results["pizza_map"]),
+    PizzaListTool(build_results["pizza_list"]),
 ]
 
 # 3. 서버 실행
