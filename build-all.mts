@@ -6,7 +6,16 @@ import fs from "fs";
 import crypto from "crypto";
 import pkg from "./package.json" with { type: "json" };
 
-const entries = fg.sync("widgets/*/index.{tsx,jsx}");
+// For each widget, prefer _app.{tsx,jsx} (which mounts the component) over index.{tsx,jsx}
+const widgetDirs = fg.sync("widgets/*/", { onlyDirectories: true });
+const entries = widgetDirs.map((dir) => {
+  // Ensure dir ends with /
+  const dirPath = dir.endsWith('/') ? dir : dir + '/';
+  const appFiles = fg.sync(`${dirPath}_app.{tsx,jsx}`);
+  const indexFiles = fg.sync(`${dirPath}index.{tsx,jsx}`);
+  // Prefer _app.jsx if it exists, otherwise use index.jsx
+  return appFiles.length > 0 ? appFiles[0] : indexFiles[0];
+}).filter(Boolean);
 const outDir = "assets";
 
 function wrapEntryPlugin(
