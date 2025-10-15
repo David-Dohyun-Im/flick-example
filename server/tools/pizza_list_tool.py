@@ -1,5 +1,5 @@
-from config.base_widget import BaseWidget
-from pydantic import BaseModel, Field, ConfigDict
+from flicky import BaseWidget, Field, ConfigDict
+from pydantic import BaseModel
 from typing import Dict, Any
 from server.api.pizzeria_api import get_pizzerias
 

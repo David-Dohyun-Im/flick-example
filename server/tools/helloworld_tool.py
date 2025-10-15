@@ -1,5 +1,5 @@
-from config.base_widget import BaseWidget
-from pydantic import BaseModel, ConfigDict
+from flicky import BaseWidget, ConfigDict
+from pydantic import BaseModel
 from typing import Dict, Any
 
 

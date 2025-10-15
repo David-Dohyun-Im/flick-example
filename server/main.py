@@ -2,11 +2,12 @@ from pathlib import Path
 import sys
 import importlib
 import inspect
+
+# Add parent directory to path for local imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from config.builder import WidgetBuilder
-from config.mcp_server import WidgetMCPServer
-from config.base_widget import BaseWidget
+# Import Flicky framework
+from flicky import WidgetBuilder, WidgetMCPServer, BaseWidget
 import uvicorn
 
 PROJECT_ROOT = Path(__file__).parent.parent

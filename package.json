@@ -1,12 +1,13 @@
 {
-  "name": "chatgpt-widget-framework",
-  "version": "0.1.0",
+  "name": "flick-example",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Example project using Flick framework",
   "scripts": {
-    "build": "tsx build-all.mts",
-    "server": "cd server && python main.py"
+    "build": "npx tsx node_modules/flicky-react/build-all.mts"
   },
   "dependencies": {
+    "flicky-react": "^1.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -18,4 +19,3 @@
     "vite": "^6.0.5"
   }
 }
-

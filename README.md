@@ -1,133 +1,209 @@
-# Flick - ChatGPT Widget Framework
+# Flicky Example Project
 
-A Python-based framework for building and deploying interactive widgets for ChatGPT using FastMCP, React, and Vite.
+Example ChatGPT widget application built with the [Flicky Framework](https://pypi.org/project/flicky/).
 
-## ✨ Key Features
-
-- **🚀 Zero Configuration**: Just create your tool and component - everything else is automated
-- **🔄 Auto-Discovery**: Tools are automatically detected and registered
-- **📦 Auto-Generation**: Build configurations and boilerplate are generated automatically
-- **⚡ Hot Reload**: Changes are picked up on server restart
-- **🎨 React + Vite**: Modern frontend development experience
-
-## 🎯 What's Automated?
-
-When you add a new widget, the framework automatically:
-
-1. ✅ Injects mounting logic during build (no `_app.jsx` needed!)
-2. ✅ Discovers and registers your tool
-3. ✅ Builds and bundles your widget
-4. ✅ Generates optimized HTML with embedded JS/CSS
-
-**You only need to create:**
-- `server/tools/your_tool.py` - Your tool logic
-- `widgets/your_widget/index.jsx` - Your React component
-
-That's it! No boilerplate files, no manual registration, no configuration!
-
-## 🚀 Quick Start
-
-### Prerequisites
+## Prerequisites
 
 - Python 3.11+
 - Node.js 18+
-- Virtual environment activated
+- npm or yarn
 
-### Installation
+## Quick Start
+
+### 1. Install Dependencies
 
 ```bash
-# Clone and navigate to project
-cd /Users/yunhyeok/Desktop/flick/flick
-
-# Install Python dependencies
+# Create virtual environment
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
 
-# Install Node dependencies
+# Install Python packages
+pip install flicky httpx
+
+# Install Node packages
 npm install
 ```
 
-### Running the Server
+### 2. Build Widgets
 
 ```bash
-# Activate virtual environment (if not already active)
-source venv/bin/activate
-
-# Build widgets (automatically happens on server start)
 npm run build
+```
 
-# Start the MCP server
+This will:
+- Discover all widgets in `widgets/` directory
+- Bundle them with React and inject mounting logic
+- Generate optimized HTML files in `assets/`
+
+### 3. Run the Server
+
+```bash
 python server/main.py
-
-# Server will be available at http://0.0.0.0:8001
 ```
 
-## 📦 Project Structure
+Server will start at: **http://0.0.0.0:8001**
+
+## Project Structure
 
 ```
-flick/
-├── server/                 # Python MCP server
-│   ├── main.py            # Server entry point
-│   ├── api/               # API endpoints
-│   │   └── pizzeria_api.py
-│   └── tools/             # MCP tools (widgets)
-│       ├── pizza_list_tool.py
-│       └── pizza_map_tool.py
-│
-├── config/                # Framework configuration
-│   ├── base_widget.py     # Base widget class
-│   ├── builder.py         # Widget builder
-│   ├── handlers.py        # MCP handlers
-│   └── mcp_server.py      # MCP server wrapper
-│
-├── widgets/               # React widget components
+.
+├── widgets/              # React widget components
+│   ├── helloworld/
+│   │   └── index.jsx    # Simple "Hello World" widget
 │   ├── pizza_list/
-│   │   ├── index.jsx      # Component definition
-│   │   └── _app.jsx       # Component mounting
+│   │   └── index.jsx    # List view of pizza places
 │   └── pizza_map/
-│       ├── index.jsx
-│       └── _app.jsx
+│       └── index.jsx    # Map view of pizza places
 │
-├── hooks/                 # React hooks
-│   ├── use-widget-props.ts
-│   ├── use-widget-state.ts
-│   └── use-openai-global.ts
+├── server/
+│   ├── tools/           # MCP widget tools (auto-discovered)
+│   │   ├── helloworld_tool.py
+│   │   ├── pizza_list_tool.py
+│   │   └── pizza_map_tool.py
+│   ├── api/
+│   │   └── pizzeria_api.py  # External API integration
+│   └── main.py          # Server entry point
 │
-├── assets/                # Built widget bundles
-│   ├── pizza_list-{hash}.html
-│   └── pizza_map-{hash}.html
-│
-├── build-all.mts          # Widget build script
-├── package.json           # Node dependencies
-└── requirements.txt       # Python dependencies
+├── assets/              # Built widget bundles (auto-generated)
+├── package.json
+└── requirements.txt
 ```
 
-## 🛠️ Creating a New Widget (Super Easy!)
+## Example Widgets
 
-With the new automation, creating a widget is incredibly simple. Just **2 files**!
-
-### Step 1: Create Your Tool (Python)
-
-Create `server/tools/my_widget_tool.py`:
+### 1. Hello World
+**Identifier**: `helloworld`  
+**Purpose**: Demonstrates basic Flicky usage
 
 ```python
-from config.base_widget import BaseWidget
-from pydantic import BaseModel, ConfigDict
+from flicky import BaseWidget
+```
+
+```jsx
+import { useWidgetProps } from 'flicky-react';
+```
+
+### 2. Pizza List
+**Identifier**: `pizza_list`  
+**Purpose**: Shows API integration and list rendering
+
+**Input**: Pizza topping (e.g., "pepperoni")  
+**Output**: List of pizza places with that topping
+
+### 3. Pizza Map
+**Identifier**: `pizza_map`  
+**Purpose**: Demonstrates CSP configuration for external APIs
+
+**Features**:
+- External API calls (Mapbox)
+- CSP configuration
+- Border preference
+
+## Flicky Commands
+
+### Framework Import
+```python
+# In your tool files
+from flicky import BaseWidget, Field, ConfigDict, WidgetMCPServer, WidgetBuilder
+```
+
+### React Hooks
+```jsx
+// In your widget components
+import { useWidgetProps, useWidgetState, useOpenAiGlobal } from 'flicky-react';
+```
+
+### Build Commands
+```bash
+# Build all widgets
+npm run build
+
+# The build script is provided by flicky-react:
+# node_modules/flicky-react/build-all.mts
+```
+
+### Python Commands
+```bash
+# Start development server
+python server/main.py
+
+# Create a new widget (with templates!)
+python -m flicky.cli.main create mywidget
+
+# Run tests
+python test_widgets.py
+python test_final.py
+
+# Check flicky installation
+pip show flicky
+
+# Upgrade flicky
+pip install --upgrade flicky
+```
+
+### NPM Commands
+```bash
+# Install dependencies
+npm install
+
+# Build widgets
+npm run build
+
+# Check flicky-react version
+npm list flicky-react
+
+# Upgrade flicky-react
+npm install flicky-react@latest
+```
+
+## Creating a New Widget
+
+### Quick Method: Use Flicky CLI ⚡
+
+```bash
+# Automatically generates both files with templates!
+python -m flicky.cli.main create mywidget
+
+# Or if flicky command is available:
+flicky create mywidget
+```
+
+This creates:
+- `server/tools/mywidget_tool.py` (with template)
+- `widgets/mywidget/index.jsx` (black bg, white text template)
+
+Then just:
+```bash
+npm run build
+python server/main.py
+```
+
+**That's it!** Widget is automatically discovered and registered.
+
+---
+
+### Manual Method (Optional)
+
+If you prefer to create files manually:
+
+#### Step 1: Create Tool File
+
+Create `server/tools/mywidget_tool.py`:
+
+```python
+from flicky import BaseWidget, ConfigDict
+from pydantic import BaseModel
 from typing import Dict, Any
 
-
-class MyWidgetInput(BaseModel):
+class MywidgetInput(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
-    
-    my_data: str = Field(..., alias="myData")
+    # Add your input fields here
 
-
-class MyWidgetTool(BaseWidget):
-    identifier = "my_widget"  # Must match widget folder name!
+class MywidgetTool(BaseWidget):
+    identifier = "mywidget"  # Must match folder name
     title = "My Widget"
-    input_schema = MyWidgetInput
-    invoking = "Preparing widget..."
+    input_schema = MywidgetInput
+    invoking = "Loading widget..."
     invoked = "Widget ready!"
     
     widget_csp = {
@@ -135,352 +211,176 @@ class MyWidgetTool(BaseWidget):
         "resource_domains": []
     }
     
-    async def execute(self, input_data: MyWidgetInput) -> Dict[str, Any]:
-        # Your custom logic here
+    async def execute(self, input_data: MywidgetInput) -> Dict[str, Any]:
+        # Your logic here
         return {
-            "myData": input_data.my_data
+            "message": "Hello from My Widget"
         }
 ```
 
-### Step 2: Create Your Component (React)
+### Step 2: Create React Component
 
-Create `widgets/my_widget/index.jsx`:
+Create `widgets/mywidget/index.jsx`:
 
 ```jsx
 import React from 'react';
-import { useWidgetProps } from '../../hooks/use-widget-props';
+import { useWidgetProps } from 'flicky-react';
 
-export default function MyWidget() {
+export default function Mywidget() {
   const props = useWidgetProps();
   
   return (
-    <div className="my-widget">
-      <h2>My Widget</h2>
-      <p>{props.myData || 'Loading...'}</p>
-      <pre>{JSON.stringify(props, null, 2)}</pre>
+    <div style={{
+      background: '#000',
+      color: '#fff',
+      padding: '40px',
+      textAlign: 'center',
+      borderRadius: '8px',
+      fontFamily: 'monospace'
+    }}>
+      <h1>{props.message || 'Welcome to Flicky'}</h1>
     </div>
   );
 }
 ```
 
-### Step 3: Run!
+#### Step 3: Build and Run
 
 ```bash
-# That's it! Just start the server
+# Build widgets
+npm run build
+
+# Restart server  
 python server/main.py
 ```
 
-The framework will automatically:
-- ✅ Inject mounting logic during build
-- ✅ Build and bundle your widget
-- ✅ Discover and register your tool
-- ✅ Generate optimized HTML bundle
+**That's it!** Your widget is automatically discovered and registered.
 
-**No boilerplate files needed!** 🎉
-
-### Widget Structure
-
-Your widget folder is incredibly simple:
-
-```
-widgets/my_widget/
-└── index.jsx           ← That's it! Just this one file!
-```
-
-The mounting logic, build configuration, and everything else is handled automatically by the build system.
-
-### Important Notes
-
-1. **Naming Convention**: Use `snake_case` for everything:
-   - Tool file: `my_widget_tool.py`
-   - Widget folder: `my_widget/`
-   - Identifier: `"my_widget"`
-
-2. **Tool Discovery**: All `*_tool.py` files in `server/tools/` are automatically discovered
-
-3. **No Import Needed**: Don't add imports to `__init__.py` or `main.py` - it's automatic!
-
-### Example: Hello World
-
-The simplest possible widget:
-
-**`server/tools/helloworld_tool.py`**:
-```python
-from config.base_widget import BaseWidget
-from pydantic import BaseModel, ConfigDict
-from typing import Dict, Any
-
-class HelloWorldInput(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
-
-class HelloWorldTool(BaseWidget):
-    identifier = "helloworld"
-    title = "Hello World"
-    input_schema = HelloWorldInput
-    invoking = "Preparing hello world..."
-    invoked = "Hello world ready!"
-    widget_csp = {"connect_domains": [], "resource_domains": []}
-    
-    async def execute(self, input_data: HelloWorldInput) -> Dict[str, Any]:
-        return {"message": "Hello World!", "timestamp": "2025-10-15"}
-```
-
-**`widgets/helloworld/index.jsx`**:
-```jsx
-import React from 'react';
-import { useWidgetProps } from '../../hooks/use-widget-props';
-
-export default function HelloWorld() {
-  const props = useWidgetProps();
-  return <h1>🌍 {props.message || 'Hello World!'} 🌍</h1>;
-}
-```
-
-Start the server and you're done! ✨
-
-## 🧪 Testing
-
-### Test Widget Components
+## Development Workflow
 
 ```bash
+# 1. Make changes to widget or tool
+vim widgets/mywidget/index.jsx
+vim server/tools/mywidget_tool.py
+
+# 2. Rebuild
+npm run build
+
+# 3. Restart server
+# Stop: Ctrl+C
+python server/main.py
+
+# 4. Test in ChatGPT
+# Connect to: http://localhost:8001
+```
+
+## Testing
+
+```bash
+# Test widget builds
 python test_widgets.py
-```
 
-Validates:
-- Widget builds successfully
-- Tools initialize correctly
-- Embedded resources are structured properly
-- HTML content is valid
-- Tools can execute and return data
-
-### Test MCP Server Responses
-
-```bash
+# Test MCP server
 python test_final.py
-```
 
-Validates:
-- Widget metadata is included in responses
-- OpenAI-specific fields are present
-- HTML is embedded correctly
-- Tools are registered properly
-
-### Test MCP Responses (Detailed)
-
-```bash
+# Test MCP responses (detailed)
 python test_mcp_responses.py
 ```
 
-Provides detailed inspection of:
-- `list_tools` response
-- `call_tool` response
-- `list_resources` response
-- `read_resource` response
+## Configuration
 
-## 🔧 How It Works
+### Widget CSP (Content Security Policy)
 
-### 1. Build Process
-
-The build process converts React components into standalone HTML bundles:
-
-```mermaid
-widgets/my_widget/index.jsx 
-  → Build with Vite (React + ReactDOM)
-  → assets/my_widget-{hash}.html
-  → Embedded in MCP tool response
-```
-
-Key features:
-- All code inlined (React, ReactDOM, your component)
-- Single HTML file per widget
-- Auto-mounting via `_app.jsx`
-- Content-hashed filenames
-
-### 2. Widget Data Flow
-
-```mermaid
-ChatGPT → MCP Server → Tool.execute()
-  → Returns { structuredContent: {...} }
-  → ChatGPT passes to window.openai.toolOutput
-  → React component reads via useWidgetProps()
-  → Component renders with data
-```
-
-### 3. MCP Server Architecture
-
-The server uses **direct MCP handler registration** (not FastMCP's `@tool` decorator) to ensure widget metadata is properly included:
+For widgets that need external resources:
 
 ```python
-# Direct handler registration
-@server.list_tools()
-async def list_tools_handler():
-    return [Tool(..., _meta=widget.get_tool_meta())]
-
-# Custom call_tool handler with widget metadata
-async def call_tool_handler(req):
-    result = await widget.execute(input_data)
-    widget_resource = widget.get_embedded_resource()
-    
-    return ServerResult(
-        CallToolResult(
-            content=[TextContent(text=widget.invoked)],
-            structuredContent=result,
-            _meta={
-                "openai.com/widget": widget_resource.model_dump(mode="json"),
-                "openai/outputTemplate": widget.template_uri,
-                "openai/widgetAccessible": True,
-                "openai/resultCanProduceWidget": True,
-            }
-        )
-    )
-```
-
-## 📝 Widget Configuration
-
-### BaseWidget Properties
-
-```python
-class MyWidgetTool(BaseWidget):
-    # Required
-    identifier = "my-widget"           # Tool ID in MCP
-    title = "My Widget"                # Display name
-    input_schema = MyWidgetInput       # Pydantic input model
-    
-    # Optional
-    description = "Widget description" # Tool description
-    invoking = "Loading..."            # Message while executing
-    invoked = "Done!"                  # Message when complete
-    
-    # OpenAI-specific options
-    widget_accessible = True           # Enable widget display
-    widget_description = None          # Widget hover text
-    widget_prefers_border = False      # Show border in UI
-    read_only = True                   # Widget is read-only
-    
-    # Content Security Policy
+class MyTool(BaseWidget):
     widget_csp = {
-        "connect_domains": [],         # Allowed fetch/XHR domains
-        "resource_domains": []         # Allowed resource domains
+        "connect_domains": ["https://api.example.com"],
+        "resource_domains": ["https://cdn.example.com"]
     }
 ```
 
-### Input Schema with Aliases
-
-ChatGPT uses camelCase, but Python uses snake_case. Use aliases:
+### Widget Options
 
 ```python
-class MyWidgetInput(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
-    
-    # Python name: snake_case, ChatGPT name: camelCase
-    pizza_topping: str = Field(..., alias="pizzaTopping")
-    center_lat: float = Field(..., alias="centerLat")
-    center_lng: float = Field(..., alias="centerLng")
+class MyTool(BaseWidget):
+    widget_accessible = True
+    widget_prefers_border = False
+    read_only = True
+    widget_description = "Optional description"
 ```
 
-## 🐛 Debugging
+## Common Commands Reference
 
-### Widget Not Displaying
-
-1. **Check browser console** (F12 → Console):
-   - Look for: `"MyWidget received props:"`
-   - Look for: `"window.openai:"`
-
-2. **Empty props `{}`**:
-   - Server isn't returning `structuredContent`
-   - Check tool's `execute()` method returns data
-
-3. **Debug info shows data, but widget blank**:
-   - Check component's render condition
-   - Verify field names match (camelCase vs snake_case)
-
-4. **Console errors about React**:
-   - Check component has no syntax errors
-   - Verify imports are correct
-
-### Server Issues
-
+### Installation & Setup
 ```bash
-# Check server is running
-curl http://localhost:8001/
-
-# Test tool directly
-python test_final.py
-
-# Check MCP responses
-python test_mcp_responses.py
+python3 -m venv venv
+source venv/bin/activate
+pip install flicky httpx
+npm install
 ```
 
-### Build Issues
-
+### Development
 ```bash
-# Clean build
-rm -rf assets/*.html assets/*.js
+npm run build                    # Build widgets
+python server/main.py            # Start server
+python test_widgets.py           # Run tests
+```
 
-# Rebuild
-npm run build
+### Maintenance
+```bash
+pip list | grep flicky            # Check version
+pip install --upgrade flicky      # Upgrade framework
+npm install flicky-react@latest   # Upgrade React package
+```
 
-# Check build output
+### Debugging
+```bash
+# Check if flicky is installed
+python -c "import flicky; print(flicky.__version__)"
+
+# Check widget discovery
+python -c "from pathlib import Path; from flicky import WidgetBuilder; b = WidgetBuilder(Path('.')); print(list(b.widgets_dir.iterdir()))"
+
+# List built assets
 ls -lh assets/
 ```
 
-## 📚 Key Files
+## Troubleshooting
 
-### `config/mcp_server.py`
-Core MCP server that handles widget metadata. Uses direct handler registration to ensure OpenAI-specific metadata is included in responses.
+### Module Not Found: flicky
+```bash
+pip install flicky
+# Make sure venv is activated
+```
 
-### `config/base_widget.py`
-Base class for all widgets. Provides methods for:
-- `get_input_schema()` - JSON schema for tool inputs
-- `get_tool_meta()` - OpenAI tool metadata
-- `get_resource_meta()` - OpenAI resource metadata
-- `get_embedded_resource()` - HTML resource for widget
-- `execute()` - Tool execution logic (abstract method)
+### Module Not Found: flicky-react  
+```bash
+npm install flicky-react
+# Check node_modules/flicky-react exists
+```
 
-### `hooks/use-widget-props.ts`
-React hook that reads `window.openai.toolOutput` to get data passed from ChatGPT.
+### Build Fails
+```bash
+# Make sure flicky-react provides build-all.mts
+ls node_modules/flicky-react/build-all.mts
 
-### `build-all.mts`
-Vite build script that:
-1. Finds all widget entry points (`_app.jsx` or `index.jsx`)
-2. Bundles with React + ReactDOM
-3. Inlines everything into single HTML file
-4. Content-hashes filenames
-5. Generates mount script
+# Reinstall if needed
+npm install flicky-react --force
+```
 
-## 🎯 Best Practices
+### Widgets Not Loading
+- Ensure `identifier` in tool matches folder name
+- Check widget has `index.jsx` with default export
+- Rebuild: `npm run build`
 
-1. **Always include debug output** during development
-2. **Test locally** with `test_widgets.py` before deploying
-3. **Use type hints** in Python and TypeScript
-4. **Keep widgets simple** - complex logic should be in the tool
-5. **Handle loading states** - data may arrive async
-6. **Use camelCase aliases** for ChatGPT compatibility
-7. **Validate inputs** with Pydantic models
-8. **Add CSP domains** if your widget fetches external resources
+## Learn More
 
-## 📖 Examples
+- **Flicky Framework**: https://pypi.org/project/flicky/
+- **Flicky React**: https://www.npmjs.com/package/flicky-react
+- **MCP Specification**: https://modelcontextprotocol.io/
 
-See the included widgets for reference:
-- **pizza_list**: Simple list display
-- **pizza_map**: More complex with styling
-
-## 🤝 Contributing
-
-To add new features:
-1. Create feature branch
-2. Add tests
-3. Update documentation
-4. Submit PR
-
-## 📄 License
+## License
 
 MIT
-
-## 🆘 Support
-
-For issues and questions:
-- Check the troubleshooting section above
-- Review test output
-- Check browser console
-- Verify MCP responses with test scripts
