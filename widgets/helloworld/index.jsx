@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWidgetProps } from 'floydr';
+import { useWidgetProps } from 'chatjs-hooks';
 
 export default function HelloWorld() {
   const props = useWidgetProps();

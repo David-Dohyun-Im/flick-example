@@ -4,10 +4,10 @@
   "type": "module",
   "description": "Example project using Floydr framework",
   "scripts": {
-    "build": "npx tsx node_modules/floydr/build-all.mts"
+    "build": "npx tsx node_modules/chatjs-hooks/build-all.mts"
   },
   "dependencies": {
-    "floydr": "^1.0.0",
+    "chatjs-hooks": "^1.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

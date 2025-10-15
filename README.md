@@ -80,7 +80,7 @@ from floydr import BaseWidget
 ```
 
 ```jsx
-import { useWidgetProps } from 'floydr';
+import { useWidgetProps } from 'chatjs-hooks';
 ```
 
 ### 2. Pizza List
@@ -110,7 +110,7 @@ from floydr import BaseWidget, Field, ConfigDict, WidgetMCPServer, WidgetBuilder
 ### React Hooks
 ```jsx
 // In your widget components
-import { useWidgetProps, useWidgetState, useOpenAiGlobal } from 'floydr';
+import { useWidgetProps, useWidgetState, useOpenAiGlobal } from 'chatjs-hooks';
 ```
 
 ### Build Commands
@@ -118,8 +118,8 @@ import { useWidgetProps, useWidgetState, useOpenAiGlobal } from 'floydr';
 # Build all widgets
 npm run build
 
-# The build script is provided by floydr:
-# node_modules/floydr/build-all.mts
+# The build script is provided by chatjs-hooks:
+# node_modules/chatjs-hooks/build-all.mts
 ```
 
 ### Python Commands
@@ -149,11 +149,11 @@ npm install
 # Build widgets
 npm run build
 
-# Check floydr version
-npm list floydr
+# Check chatjs-hooks version
+npm list chatjs-hooks
 
-# Upgrade floydr
-npm install floydr@latest
+# Upgrade chatjs-hooks
+npm install chatjs-hooks@latest
 ```
 
 ## Creating a New Widget
@@ -355,19 +355,19 @@ pip install floydr
 # Make sure venv is activated
 ```
 
-### Module Not Found: floydr (npm)
+### Module Not Found: chatjs-hooks (npm)
 ```bash
-npm install floydr
-# Check node_modules/floydr exists
+npm install chatjs-hooks
+# Check node_modules/chatjs-hooks exists
 ```
 
 ### Build Fails
 ```bash
-# Make sure floydr provides build-all.mts
-ls node_modules/floydr/build-all.mts
+# Make sure chatjs-hooks provides build-all.mts
+ls node_modules/chatjs-hooks/build-all.mts
 
 # Reinstall if needed
-npm install floydr --force
+npm install chatjs-hooks --force
 ```
 
 ### Widgets Not Loading
@@ -378,7 +378,7 @@ npm install floydr --force
 ## Learn More
 
 - **Floydr (Python)**: https://pypi.org/project/floydr/
-- **Floydr (npm)**: https://www.npmjs.com/package/floydr
+- **ChatJS Hooks (npm)**: https://www.npmjs.com/package/chatjs-hooks
 - **MCP Specification**: https://modelcontextprotocol.io/
 
 ## License
