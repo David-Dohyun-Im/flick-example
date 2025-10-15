@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWidgetProps } from '../../hooks/use-widget-props';
+import { useWidgetProps } from 'flicky-react';
 
 export default function HelloWorld() {
   const props = useWidgetProps();

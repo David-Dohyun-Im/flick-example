@@ -4,7 +4,10 @@ import fg from "fast-glob";
 import path from "path";
 import fs from "fs";
 import crypto from "crypto";
-import pkg from "./package.json" with { type: "json" };
+
+// Read package.json from current working directory (project root)
+const pkgPath = path.join(process.cwd(), "package.json");
+const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 
 // Find all widget directories with index.{tsx,jsx}
 const widgetDirs = fg.sync("widgets/*/", { onlyDirectories: true });
