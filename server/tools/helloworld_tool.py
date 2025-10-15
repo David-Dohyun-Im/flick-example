@@ -1,4 +1,4 @@
-from flicky import BaseWidget, ConfigDict
+from floydr import BaseWidget, ConfigDict
 from pydantic import BaseModel
 from typing import Dict, Any
 

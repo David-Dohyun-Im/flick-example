@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWidgetProps } from 'flicky-react';
+import { useWidgetProps } from 'floydr';
 
 export default function PizzaMap() {
   const props = useWidgetProps();

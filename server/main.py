@@ -6,8 +6,8 @@ import inspect
 # Add parent directory to path for local imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-# Import Flicky framework
-from flicky import WidgetBuilder, WidgetMCPServer, BaseWidget
+# Import Floydr framework
+from floydr import WidgetBuilder, WidgetMCPServer, BaseWidget
 import uvicorn
 
 PROJECT_ROOT = Path(__file__).parent.parent

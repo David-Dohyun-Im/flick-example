@@ -1,6 +1,6 @@
-# Flicky Example Project
+# Floydr Example Project
 
-Example ChatGPT widget application built with the [Flicky Framework](https://pypi.org/project/flicky/).
+Example ChatGPT widget application built with the [Floydr Framework](https://pypi.org/project/floydr/).
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install Python packages
-pip install flicky httpx
+pip install floydr httpx
 
 # Install Node packages
 npm install
@@ -73,14 +73,14 @@ Server will start at: **http://0.0.0.0:8001**
 
 ### 1. Hello World
 **Identifier**: `helloworld`  
-**Purpose**: Demonstrates basic Flicky usage
+**Purpose**: Demonstrates basic Floydr usage
 
 ```python
-from flicky import BaseWidget
+from floydr import BaseWidget
 ```
 
 ```jsx
-import { useWidgetProps } from 'flicky-react';
+import { useWidgetProps } from 'floydr';
 ```
 
 ### 2. Pizza List
@@ -99,18 +99,18 @@ import { useWidgetProps } from 'flicky-react';
 - CSP configuration
 - Border preference
 
-## Flicky Commands
+## Floydr Commands
 
 ### Framework Import
 ```python
 # In your tool files
-from flicky import BaseWidget, Field, ConfigDict, WidgetMCPServer, WidgetBuilder
+from floydr import BaseWidget, Field, ConfigDict, WidgetMCPServer, WidgetBuilder
 ```
 
 ### React Hooks
 ```jsx
 // In your widget components
-import { useWidgetProps, useWidgetState, useOpenAiGlobal } from 'flicky-react';
+import { useWidgetProps, useWidgetState, useOpenAiGlobal } from 'floydr';
 ```
 
 ### Build Commands
@@ -118,8 +118,8 @@ import { useWidgetProps, useWidgetState, useOpenAiGlobal } from 'flicky-react';
 # Build all widgets
 npm run build
 
-# The build script is provided by flicky-react:
-# node_modules/flicky-react/build-all.mts
+# The build script is provided by floydr:
+# node_modules/floydr/build-all.mts
 ```
 
 ### Python Commands
@@ -128,17 +128,17 @@ npm run build
 python server/main.py
 
 # Create a new widget (with templates!)
-python -m flicky.cli.main create mywidget
+python -m floydr.cli.main create mywidget
 
 # Run tests
 python test_widgets.py
 python test_final.py
 
-# Check flicky installation
-pip show flicky
+# Check floydr installation
+pip show floydr
 
-# Upgrade flicky
-pip install --upgrade flicky
+# Upgrade floydr
+pip install --upgrade floydr
 ```
 
 ### NPM Commands
@@ -149,23 +149,23 @@ npm install
 # Build widgets
 npm run build
 
-# Check flicky-react version
-npm list flicky-react
+# Check floydr version
+npm list floydr
 
-# Upgrade flicky-react
-npm install flicky-react@latest
+# Upgrade floydr
+npm install floydr@latest
 ```
 
 ## Creating a New Widget
 
-### Quick Method: Use Flicky CLI ⚡
+### Quick Method: Use Floydr CLI ⚡
 
 ```bash
 # Automatically generates both files with templates!
-python -m flicky.cli.main create mywidget
+python -m floydr.cli.main create mywidget
 
-# Or if flicky command is available:
-flicky create mywidget
+# Or if floydr command is available:
+floydr create mywidget
 ```
 
 This creates:
@@ -191,7 +191,7 @@ If you prefer to create files manually:
 Create `server/tools/mywidget_tool.py`:
 
 ```python
-from flicky import BaseWidget, ConfigDict
+from floydr import BaseWidget, ConfigDict
 from pydantic import BaseModel
 from typing import Dict, Any
 
@@ -238,7 +238,7 @@ export default function Mywidget() {
       borderRadius: '8px',
       fontFamily: 'monospace'
     }}>
-      <h1>{props.message || 'Welcome to Flicky'}</h1>
+      <h1>{props.message || 'Welcome to Floydr'}</h1>
     </div>
   );
 }
@@ -349,25 +349,25 @@ ls -lh assets/
 
 ## Troubleshooting
 
-### Module Not Found: flicky
+### Module Not Found: floydr
 ```bash
-pip install flicky
+pip install floydr
 # Make sure venv is activated
 ```
 
-### Module Not Found: flicky-react  
+### Module Not Found: floydr (npm)
 ```bash
-npm install flicky-react
-# Check node_modules/flicky-react exists
+npm install floydr
+# Check node_modules/floydr exists
 ```
 
 ### Build Fails
 ```bash
-# Make sure flicky-react provides build-all.mts
-ls node_modules/flicky-react/build-all.mts
+# Make sure floydr provides build-all.mts
+ls node_modules/floydr/build-all.mts
 
 # Reinstall if needed
-npm install flicky-react --force
+npm install floydr --force
 ```
 
 ### Widgets Not Loading
@@ -377,8 +377,8 @@ npm install flicky-react --force
 
 ## Learn More
 
-- **Flicky Framework**: https://pypi.org/project/flicky/
-- **Flicky React**: https://www.npmjs.com/package/flicky-react
+- **Floydr (Python)**: https://pypi.org/project/floydr/
+- **Floydr (npm)**: https://www.npmjs.com/package/floydr
 - **MCP Specification**: https://modelcontextprotocol.io/
 
 ## License

@@ -1,13 +1,13 @@
 {
-  "name": "flick-example",
+  "name": "floydr-example",
   "version": "1.0.0",
   "type": "module",
-  "description": "Example project using Flick framework",
+  "description": "Example project using Floydr framework",
   "scripts": {
-    "build": "npx tsx node_modules/flicky-react/build-all.mts"
+    "build": "npx tsx node_modules/floydr/build-all.mts"
   },
   "dependencies": {
-    "flicky-react": "^1.0.0",
+    "floydr": "^1.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
